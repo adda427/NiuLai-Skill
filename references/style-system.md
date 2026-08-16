@@ -1,128 +1,138 @@
 # Style system
 
-Use this reference when selecting a preset or translating the look of a difficult
-source. The style is defined by observable construction choices, not by one film,
-game, engine, meme, or character.
+Use this reference to choose a preset or tune a difficult source. Define the look
+through observable production limits rather than one film, game, engine, or meme.
 
 ## Visual thesis
 
-Aim for **earnest technical limitation**: a scene made with visibly limited 3D
-resources, direct color choices, imperfect lighting, and unintended charm. It
-should feel authored and rebuilt, not vandalized with a “bad quality” filter.
+Aim for **sincere technical insufficiency**: an understandable scene built with too
+few polygons, too few textures, too few assets, and lighting placed without mature
+cinematography. The charm should be accidental, direct, and slightly awkward.
 
-The key tension is:
+## Eight style pillars
 
-- recognizable source truth versus simplified construction;
-- cheerful or ordinary subject matter versus awkward rendering;
-- vivid color versus cheap material response;
-- readable emotion versus stiff facial geometry.
+### 1. Coarse geometry
 
-## Six style pillars
+- Use few large planes, awkward edge flow, hard normals, and lumpy silhouettes.
+- Build joints from blocks, hands from wedges or rectangular fingers, and faces
+  from crude cheek, brow, nose, jaw, and mouth planes.
+- Avoid clean triangular mosaics, elegant facets, smooth subdivision, and toy forms.
 
-### 1. Geometry
+### 2. Unrefined faces and gaze
 
-- Use low segment counts and visible planar turns.
-- Favor chunky silhouettes, wedge-like fingers, blocky joints, faceted cheeks,
-  sharp eyelids, polygonal muzzles/noses, and hard-edged foliage or terrain.
-- Keep enough topology to preserve pose, expression, and identity.
-- Avoid smooth spheres, subdivision surfaces, rounded toy proportions, and clean
-  contemporary “designer low-poly” tessellation.
+- Reuse simple eyeball and eye-texture construction across multiple characters.
+- Allow unequal eye sizes, slightly off-center pupils, imperfect gaze convergence,
+  stiff eyelids, crude brows, flat mouth slits, and frozen expressions.
+- Keep the broad emotion readable; remove professional subtle acting and beauty polish.
 
-### 2. Materials
+### 3. Tiny rough textures
 
-- Use low-resolution diffuse textures with soft pixels, uneven scale, limited
-  detail, mild stretching, and occasional repetition.
-- Allow rough fur or grass to read as a flat or noisy texture pasted onto simple geometry.
-- Keep specular response crude and inconsistent; avoid ray-traced realism, glossy
-  product rendering, perfect subsurface scattering, or pristine PBR materials.
+- Use visibly small, blurry diffuse maps with seams, mirrored details, UV stretching,
+  inconsistent scale, crude painted shadows, and limited color steps.
+- Replace hair strands, fur grooming, pores, fabric weave, and fine embroidery with
+  noisy repeated patches or a few thick texture cards.
 
-### 3. Lighting
+### 4. Obvious repetition
 
-- Prefer simple daylight or blunt ambient-plus-directional lighting.
-- Allow hard transitions, underfilled shadows, clipped highlights, flat local
-  regions, and slightly mismatched subject/background illumination.
-- Bright does not mean soft or polished. Preserve awkwardness and readability.
+- Reuse the same bark, grass, plank, stone, wall, fur, scale, cloth, skin, hair,
+  and eye maps where plausible.
+- Make tiling visible. Repetition is evidence of a small asset budget, not a flaw
+  to hide with procedural variation.
 
-### 4. Color
+### 5. Sparse repeated background
 
-- Anchor the palette in the source image.
-- Permit strong grass green, cyan sky, orange, ochre, yellow, beige, and other
-  plainspoken colors when the source supports them.
-- Use limited grading. Avoid default teal-orange cinema, sepia nostalgia, smoky
-  horror green, or desaturation unless requested.
+- Keep only the minimum scene masses required to identify the setting.
+- Reuse two or three tree, bush, post, rock, building, beam, or prop models many times.
+- Remove small signs, decorative trim, incidental set dressing, and unique clutter.
+- Avoid both detailed environments and deliberately clean voxel worlds.
 
-### 5. Rendering and capture
+### 6. Naive lighting
 
-- Use modest render resolution, weak antialiasing, simple shadows, short texture
-  filtering, and limited atmospheric effects.
-- Add only subtle noise, fine pixel-grid texture, mild chromatic fringing, edge
-  shimmer, or screen-recorded softness.
-- Do not add scanlines, VHS damage, heavy JPEG blocks, CRT curvature, or glitch
-  effects unless requested; those describe a display artifact, not the core style.
+- Prefer one blunt directional or overhead-front light plus weak ambient fill.
+- Allow flat local color, clipped foreheads/noses/hands, muddy eye sockets and necks,
+  hard low-resolution shadows, weak contact shadows, and exposure mismatch.
+- Avoid rim lights, beauty lights, three-point setups, soft bounce, global illumination,
+  volumetric beams, bloom, cinematic fog, and carefully shaped facial light.
 
-### 6. Mood
+### 7. Cheap rendering and capture
 
-- Favor sincere, homemade, strangely vivid, awkwardly theatrical, and faintly comic.
-- Keep humor emergent from rendering limitations. Do not force parody faces,
-  slapstick props, meme captions, or grotesque horror.
+- Use weak antialiasing, limited texture filtering, basic shadow maps, jagged edges,
+  mild pixel crawl, fine noise, slight color fringe, and screen-capture softness.
+- Keep these effects secondary. Do not substitute VHS, CRT, glitch, mosaic, or
+  heavy JPEG damage for actual primitive assets.
+
+### 8. Plain mood and color
+
+- Anchor three to six large colors in the source, then render them bluntly.
+- Favor sincere, homemade, literal, slightly washed-out or overexposed color.
+- Keep dark scenes readable. Do not default to horror, sepia, teal-orange cinema,
+  dramatic desaturation, or premium atmospheric depth.
 
 ## Presets
 
-### `bright_folk_cgi` — default
+### `primitive_folk_cgi` — default
 
-For portraits, animals, landscapes, casual snapshots, and general scenes.
+For general images, animals, people, landscapes, objects, and mixed scenes.
 
-- open daylight or simple bright interior light;
-- saturated source-anchored colors;
-- rough fuzzy/noisy diffuse textures;
-- obvious but readable facial planes;
-- basic vegetation and terrain assets;
-- imperfect exposure and simple shadows;
-- earnest, low-budget animated-film charm.
+- extreme reconstruction; medium identity lock; very-low detail budget;
+- crude asymmetrical meshes and stiff gaze;
+- obvious texture tiling and heavy asset reuse;
+- sparse repetitive background;
+- one naive light plus flat ambient;
+- low production value that remains readable.
+
+### `bright_folk_cgi`
+
+Use when the user wants more likeness or a gentler result.
+
+- high reconstruction; high identity lock;
+- readable angular faces with fewer intentional gaze errors;
+- rough textures and repeated background assets, but less aggressively;
+- bright simple daylight with awkward exposure.
 
 ### `sunlit_game_map`
 
-For architecture, streets, travel photos, interiors with strong spatial layout,
-and scenes that benefit from a game-map reading.
+For architecture, streets, travel photos, and spatial scenes.
 
-- modular block geometry and repeated map textures;
-- baked-looking light, blunt sky illumination, limited reflections;
-- sparse prop detail and simple collision-like shapes;
-- mild early-3D screenshot artifacts without default darkness.
+- modular block geometry; repeated facade and ground maps;
+- very small prop library and sparse set dressing;
+- blunt sky light plus one direction light; simple baked-looking shadows;
+- no automatic dark industrial mood.
 
 ### `community_cgi_stage`
 
-For dialogue, group portraits, performances, ceremonies, and frontal compositions.
+For portraits, dialogue, group shots, performances, and frontal compositions.
 
-- shallow staged depth and flat scenic backdrops;
-- stiff pose transitions and simple costume geometry;
-- basic spotlight or ambient fill with uneven face exposure;
-- theatrical framing and local-production sincerity.
+- exact head count and spacing; medium identity lock;
+- shared eye, skin, cloth, and hair assets; stiff hands and frozen expressions;
+- shallow staged depth and repeated beams/backdrops;
+- plain overhead-front light, uneven faces, and no cinematic separation.
 
 ### `rough_night_render`
 
-Use only when the source is genuinely night-time or the user requests night.
+Use only for genuine night sources or explicit night requests.
 
-- retain readable saturated local colors;
-- use hard point lights, shallow light falloff, simple shadow maps, and dark gaps;
-- avoid turning the frame into horror unless requested.
+- a few crude point lights, short falloff, hard shadow maps, and dark gaps;
+- repeated emissive maps; readable local colors;
+- no horror treatment unless requested.
 
-## Source-specific adjustments
+## Source adjustments
 
-| Source | Preserve most | Simplify visibly | Avoid |
+| Source | Lock | Deliberately reduce | Reuse |
 |---|---|---|---|
-| Face/portrait | silhouette, gaze, expression, hair mass | cheeks, nose, lips, eyelids, ears | generic face, toy smoothness |
-| Animal | species, markings, stance, muzzle | fur, paws, joints, horns if present | adding human traits or new horns |
-| Landscape | horizon, landform, palette | foliage cards, rock planes, tiled ground | fantasy landmarks |
-| Architecture | massing, openings, perspective | trim, glass, facade textures | warped layout |
-| Food/object | silhouette, count, arrangement | curved surfaces, labels, microtexture | plastic product polish |
-| Group scene | head count, spacing, gestures | faces, hands, garments | merging or adding people |
+| Portrait | silhouette, head angle, hair mass, clothing blocks | face planes, eye alignment, skin detail, hands | eye/skin/hair maps |
+| Group | count, spacing, gestures, color blocks | individual face acting, fingers, garment detail | eyes, skin, cloth, hair assets |
+| Animal | species, markings, stance, muzzle direction | fur, paws, joints, facial refinement | fur/scale/eye maps |
+| Landscape | horizon, landform, palette | foliage variety, rock detail, atmosphere | trees, bushes, grass, rocks |
+| Architecture | massing, openings, perspective | trim, glass, facade detail, clutter | wall, roof, ground modules |
+| Food/object | silhouette, count, arrangement | curves, labels, microtexture, reflections | surface and label-free maps |
 
-## Strength scale
+## Strength and fidelity
 
-- `medium`: source remains easy to recognize; geometry changes are visible mainly
-  on contours and large planes. Use for identity-sensitive portraits.
-- `high` (default): all objects read as rebuilt low-poly assets; key identity and
-  composition remain stable.
-- `extreme`: primitive geometry, very small textures, stiff forms, and stronger
-  rendering faults. Use only when the user prioritizes comic crudeness over likeness.
+- `medium`: recognizable and restrained; use only when likeness dominates.
+- `high`: every object reads as rebuilt low-poly; detail remains moderately faithful.
+- `extreme` (default): preserve broad anchors only; use primitive geometry, repeated
+  maps, sparse assets, stiff gazes, and naive lighting.
+
+Use `identity_lock: medium` by default. Raise to `high` only for explicit likeness;
+never lower broad composition and subject-count locks.

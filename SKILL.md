@@ -1,22 +1,22 @@
 ---
 name: niu-lai-translator
 description: >-
-  Reconstructs any supplied image as a deliberately crude, bright low-poly 3D
-  game or folk-CGI frame while preserving the source subject, composition,
-  viewpoint, pose, and scene identity. Use when users invoke 牛来低模转译,
-  niu-lai-translator, 反向出圈画质, 低画质重制, 早期 3D 游戏截图,
-  rough low-poly remake, bootleg CGI, primitive game-engine render, or ask to
-  make a photo or image look intentionally cheap, angular, low-resolution, and
-  awkwardly charming rather than polished or photorealistic.
+  Reconstructs any supplied image as deliberately crude primitive low-poly 3D:
+  clumsy faces and gazes, very low-resolution repeated textures, reused sparse
+  background assets, and naive single-light rendering while preserving only the
+  source's broad composition anchors. Use when users invoke 牛来低模转译,
+  niu-lai-translator, 反向出圈画质, 低画质重制, 粗糙人物低模, 早期 3D 游戏截图,
+  primitive folk CGI, bootleg CGI, or ask to make an image look intentionally
+  cheap, awkward, poorly modeled, poorly lit, and less faithfully reproduced.
 ---
 
 # Niu Lai Translator / 牛来低模转译器
 
-> Core principle: **原图提供事实，新图把事实重新建模成笨拙、生猛、明亮的低模世界。**
+> Core principle: **保留大关系，主动放弃精致还原；让低质量来自整套生产能力，而不是后期滤镜。**
 
-Treat the task as image-to-scene reconstruction, not a filter, compression pass,
-or generic polygon effect. Preserve what the source depicts; replace how that
-world appears to have been modeled, textured, lit, rendered, and captured.
+Rebuild the source as a scene made by a sincere but technically limited early-3D
+team. Keep the image readable and structurally related to the source while making
+modeling, eyes, textures, asset variety, lighting, and rendering visibly crude.
 
 ## Workflow
 
@@ -24,157 +24,164 @@ Track this sequence:
 
 ```text
 - [ ] 1. Confirm that an input image exists; request one if absent
-- [ ] 2. Read explicit parameters and infer safe defaults for the rest
-- [ ] 3. Analyze subject, composition, depth layers, pose, palette, and identity anchors
-- [ ] 4. Choose a scene preset and reconstruction strength
-- [ ] 5. Build one image-edit prompt using the required order
-- [ ] 6. Generate/edit the image unless the user asked for prompts or options only
-- [ ] 7. Inspect the result against the quality gate and retry if needed
-- [ ] 8. Return the image plus a compact record of the chosen treatment
+- [ ] 2. Read explicit parameters and infer the rest from the primitive defaults
+- [ ] 3. Extract broad anchors: subject count, layout, pose, camera, color blocks
+- [ ] 4. Set a deliberately low detail and fidelity budget
+- [ ] 5. Build one source-based image-edit prompt in the required order
+- [ ] 6. Generate/edit unless the user asked for prompts or options only
+- [ ] 7. Inspect against the inverted quality gate; retry polished results
+- [ ] 8. Return the image plus one compact treatment note
 ```
 
 ## Interaction
 
-- Require an input image. Do not invent a source scene from a text-only request
-  unless the user explicitly asks for a new image rather than a translation.
-- Prefer direct execution when the user uploads an image without parameters or
-  says “默认”, “你来判断”, or equivalent.
+- Require an input image unless the user explicitly asks for a new scene.
+- Execute directly when an image is supplied without parameters or the user says
+  “默认”, “你来判断”, or equivalent.
 - If the user says “先别生成”, “给方案”, or “让我选”, do not generate. Offer at
-  most three clearly distinct directions.
-- Ask at most one question only when a missing decision would materially change
-  the result. Otherwise use the defaults below.
-- Use an image-editing or image-generation tool that can receive the source image.
-  Include every target image through the tool's supported reference-image input.
-- Never claim pixel-perfect identity preservation. Report any material deviation
-  after inspecting the output.
+  most three distinct directions.
+- Ask at most one question only when a missing decision materially changes output.
+- Use an image-edit tool that receives the source image. Include every target image
+  through the tool's supported reference input.
+- Treat this as reconstruction, not compression, pixelation, or a polygon overlay.
 
-## Analyze the source internally
+## Analyze broad anchors internally
 
-Identify without narrating every item unless asked:
+Identify without reporting every item unless asked:
 
-- **Identity anchors:** silhouette, face shape, hairstyle, clothing blocks,
-  species, distinctive objects, architecture, signage, and landmark geometry.
-- **Composition:** crop, camera height, focal length impression, horizon, subject
-  scale, gaze, pose, foreground/midground/background, and occlusion.
-- **Color anchors:** three to six dominant colors that should survive translation.
-- **Lighting:** direction, time-of-day evidence, contrast, and exposure.
-- **Text:** retain only when the user requests exact text; otherwise omit UI,
-  subtitles, watermarks, and newly invented lettering.
+- **Subjects:** count, broad type, silhouette, large hairstyle, garment category,
+  dominant color blocks, large props, pose, gesture, and approximate gaze.
+- **Composition:** crop, camera height, perspective, horizon, relative scale,
+  spacing, foreground/midground/background, and occlusion.
+- **Scene:** only the major terrain, architecture, or stage masses required for
+  the image to remain recognizable.
+- **Palette:** three to six source colors worth retaining.
+- **Discardable detail:** fine facial likeness, subtle expression, hair strands,
+  embroidery, microtexture, unique background assets, small signage, and decoration.
 
-## Choose the treatment
+## Use primitive defaults
 
-Use `bright_folk_cgi` by default. Read [references/style-system.md](references/style-system.md)
-when selecting another preset or tuning a difficult scene.
+Use `primitive_folk_cgi` unless the user requests a gentler translation. Read
+[references/style-system.md](references/style-system.md) when selecting another preset.
 
 ```yaml
-preset: bright_folk_cgi
-reconstruction_strength: high
-geometry: visibly_low_poly
-face_geometry: angular_readable
-texture_resolution: low
-texture_finish: rough_repeating
-lighting: hard_awkward_daylight
-palette: source_anchored_saturated
+preset: primitive_folk_cgi
+reconstruction_strength: extreme
+anchor_lock: strict
+identity_lock: medium
+detail_budget: very_low
+geometry: primitive_low_poly
+face_geometry: clumsy_asymmetric
+gaze_quality: stiff_misaligned
+texture_resolution: very_low
+texture_repetition: obvious
+asset_reuse: heavy
+background_detail: sparse
+lighting: naive_single_light
 post_effects: subtle_capture_noise
-composition_lock: strict
-identity_lock: high
 text_mode: none
 ratio: source_ratio
 ```
 
-Do not default to a dark horror or dystopian look. Early Source-engine games may
-be used as a technical analogy for asset limitations, but they are not the main
-color or mood reference. Prefer bright daylight, blunt colors, uneven exposure,
-and homemade theatrical charm.
+These are intentional defaults. High facial fidelity, rich backgrounds, unique
+textures, attractive eyes, or professional lighting are failures unless requested.
 
-## Reconstruct, do not degrade mechanically
+## Preserve anchors, not polish
 
-Apply all five layers together:
+- Strictly preserve subject count, broad left-to-right arrangement, major pose,
+  gesture, crop, camera, occlusion, scene category, and dominant color blocks.
+- Preserve large identity anchors such as species, hair mass, clothing category,
+  and major props. Do not preserve every facial detail by default.
+- Permit proportions, facial topology, gaze alignment, garment detail, and surface
+  accuracy to become visibly crude while the scene remains legible.
+- Raise `identity_lock` to `high` only when the user requests likeness or the task
+  is identity-sensitive; reduce reconstruction strength if necessary.
+- Do not change a real person's apparent age, ethnicity, body category, pose, or
+  relationship to others merely to create the style.
+- Add no people, animals, horns, cow traits, weapons, props, logos, subtitles,
+  interface, meme text, landmarks, or weather not evidenced by the source.
 
-1. **Geometry:** visibly reduce forms to planar masses with hard silhouette turns.
-2. **Materials:** rebuild surfaces with small, blurry, slightly repeating textures.
-3. **Lighting:** use simple, imperfect, occasionally overexposed illumination.
-4. **Rendering:** reduce polish, reflections, antialiasing, and physically accurate shading.
-5. **Capture:** add restrained pixel-grid texture, noise, mild color fringing, or
-   screen-capture softness only after the 3D reconstruction is convincing.
+## Rebuild all production layers
 
-A low-resolution overlay alone is failure. A polished modern low-poly illustration
-is also failure.
+Apply all layers together:
 
-## Preserve source truth
+1. **Geometry:** use few, large, awkward planes; hard normals; lumpy silhouettes;
+   blocky joints; wedge hands; crude facial wedges; no elegant tessellation.
+2. **Faces and gaze:** reuse simple eye construction; allow unequal eye size,
+   slightly off-center pupils, imperfect gaze alignment, stiff lids, flat mouth
+   slits, and frozen expressions. Keep intent readable, not professionally acted.
+3. **Materials:** use tiny blurry diffuse maps, seams, UV stretching, mirrored
+   details, inconsistent scale, and crude painted shadow information.
+4. **Repetition:** visibly tile textures and reuse a very small library of trees,
+   posts, rocks, buildings, props, hair cards, cloth maps, or eye assets.
+5. **Background:** remove incidental detail. Repeat a few primitive assets with
+   minimal variation; avoid rich set dressing or individually authored objects.
+6. **Lighting:** use one blunt directional/overhead-front light plus weak flat
+   ambient fill. Allow clipped highlights, muddy dark patches, hard low-resolution
+   shadows, weak contact, and exposure mismatch between nearby subjects.
+7. **Rendering:** use weak antialiasing, limited texture filtering, simple shadow
+   maps, fine noise, mild color fringe, and modest screen-capture softness.
 
-- Preserve subject count, role, pose, gaze direction, gesture, framing, viewpoint,
-  camera distance, major object placement, terrain, and weather unless instructed.
-- Preserve recognizable identity through silhouette and large facial planes while
-  converting curved cheeks, noses, lips, eyes, and limbs into angular geometry.
-- Keep people at their apparent age and do not change body type, ethnicity,
-  clothing category, expression, or relationships without instruction.
-- Do not add horns, animal traits, game weapons, props, characters, logos, subtitles,
-  interface elements, or meme text merely because the skill name references 牛来.
-- Do not turn every subject into a cow. The name describes the visual movement,
-  not the content.
-- Do not reproduce a named film's characters, logos, or exact frame. Translate
-  general visual traits from the supplied image and user intent.
+Do not use darkness, horror grading, VHS damage, heavy JPEG corruption, or mosaic
+as shortcuts. “Bad” must come primarily from limited scene production.
 
 ## Build the edit prompt
 
 Read [references/prompt-blueprint.md](references/prompt-blueprint.md) for the full
 schema and reusable clauses. Construct prompts in this order:
 
-1. Declare source-based scene reconstruction.
-2. Lock subject, count, composition, viewpoint, pose, and scene layout.
-3. State the chosen preset and mood.
-4. Specify low-poly geometry, including angular faces when people or animals appear.
-5. Specify low-resolution materials and limited surface detail.
-6. Specify lighting, palette, rendering limitations, and restrained capture artifacts.
-7. State aspect ratio and requested text behavior.
-8. End with explicit prohibitions tailored to the source.
+1. Declare source-based primitive 3D reconstruction.
+2. Lock broad anchors and explicitly release fine-detail fidelity.
+3. Set primitive preset, extreme strength, and very-low detail budget.
+4. Specify crude geometry, faces, eyes, hair, hands, and proportions.
+5. Require very-low-resolution maps, obvious tiling, and heavy asset reuse.
+6. Strip background detail to repeated scene primitives.
+7. Specify naive lighting, uneven exposure, and basic render limitations.
+8. State ratio, text behavior, and source-tailored prohibitions.
 
-Prefer concrete visual instructions over aesthetic labels. Mention a named engine,
-game, or film only when the user explicitly asks; translate it into observable
-properties rather than relying on the name alone.
+Prefer observable flaws over labels such as “ugly” or “bad quality”. Mention a
+named game, engine, or film only when the user asks; always translate the name into
+construction, material, lighting, and rendering properties.
 
 ## Inspect and recover
 
 Read [references/quality-and-recovery.md](references/quality-and-recovery.md) before
-judging a generated result. Retry when any hard failure occurs, especially:
+judging output. Retry whenever the result is too faithful, attractive, detailed,
+varied, or professionally lit. In particular, reject results where:
 
-- source composition or identity drifted;
-- geometry remained smooth or became polished modern low-poly art;
-- the result is merely blurry, pixelated, or filtered;
-- the image became needlessly dark, cinematic, horrific, or sepia;
-- text, props, characters, or cow features were invented.
+- faces retain polished animation acting or appealing aligned eyes;
+- textures are clean, unique, high-resolution, or subtly varied;
+- background objects are numerous, detailed, and individually modeled;
+- lighting uses cinematic separation, rim light, soft bounce, or volumetric depth;
+- geometry resembles fashionable designer low-poly art;
+- the effect is only blur, pixelation, noise, or color grading.
 
-On retry, change only the failed dimension and restate all preservation locks.
-Stop after two retries unless the user asks to continue.
+On retry, change only the failed dimension and restate all anchor locks. Stop after
+two retries unless the user asks to continue.
 
 ## Output
 
-For a completed edit, return:
+For a completed edit, return the generated image and one sentence naming the
+preset plus the main retained anchors. Include YAML only when requested.
 
-1. the generated image;
-2. one sentence naming the selected preset and the main preservation choice;
-3. optional compact YAML only when the user asks for parameters or reproducibility.
-
-For prompt-only requests, return one production-ready prompt and one negative
-constraint block. Do not pad the answer with process notes.
+For prompt-only requests, return one production prompt and one negative block.
 
 ## Minimal invocation
 
 ```text
 /niu-lai-translator
 启用牛来低模转译器
-把这张图做成反向出圈的低画质 3D 截图
+把这张图重制成制作能力很差的早期 3D 动画截图
 ```
 
 ```yaml
 skill: niu-lai-translator
-preset: bright_folk_cgi
-reconstruction_strength: high
-composition_lock: strict
-identity_lock: high
-text_mode: none
+preset: primitive_folk_cgi
+reconstruction_strength: extreme
+identity_lock: medium
+asset_reuse: heavy
+lighting: naive_single_light
 ratio: source_ratio
 ```
 
-**不是把清晰图片压糊，而是把画面中的现实重新做成一套能力有限、审美直给、意外鲜活的旧 3D 资产。**
+**不是做得像“低模艺术”，而是像真的只有少量模型、少量贴图、简单灯光和有限技术。**
