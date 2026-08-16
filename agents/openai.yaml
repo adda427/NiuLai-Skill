@@ -1,4 +1,4 @@
 interface:
   display_name: "牛来低模转译器"
-  short_description: "把任意图像重制成明亮、粗糙、笨拙生猛的早期低模 3D 截图"
-  default_prompt: "Use $niu-lai-translator to reconstruct this image as a bright, rough low-poly 3D game-like scene while preserving its subject and composition."
+  short_description: "把任意图像重制成贴图重复、灯光拙劣、眼神失准的原始低模 3D"
+  default_prompt: "Use $niu-lai-translator to rebuild this image as primitive folk CGI with crude faces, repeated tiny textures, reused sparse assets, and naive single-light rendering."
