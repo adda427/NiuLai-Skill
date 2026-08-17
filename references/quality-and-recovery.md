@@ -5,16 +5,29 @@ not conventional visual polish.
 
 ## Hard pass criteria
 
-- **Broad anchor fidelity:** subject count, arrangement, pose, crop, camera, scene
-  category, and dominant color blocks remain recognizable.
+- **Hard anchor fidelity:** subject count/type, arrangement, semantic action, crop,
+  camera, scene category, major props, and dominant color blocks remain recognizable.
 - **Fidelity ceiling:** fine faces, eyes, hair, hands, garments, and background are
   visibly simplified; a near-exact polished reproduction fails.
-- **Primitive geometry:** silhouettes, joints, hands, faces, foliage, terrain, and
-  architecture show few awkward planes rather than elegant designer facets.
+- **Extremely sparse topology:** heads, torsos, limbs, animal bodies, hands, faces,
+  foliage, and architecture use a handful of large crude masses. Dense small facets
+  that preserve smooth silhouettes fail even if their normals look faceted.
+- **Broken proportions:** human or animal head/body, limb, neck, torso, joint,
+  muzzle, and paw/hoof ratios visibly depart from the source without changing the
+  subject category or becoming horrific.
+- **Failed pose and rigging:** semantic action survives, but joint flow, balance,
+  weight transfer, torso compensation, and contact are stiff, simplified, or wrong.
+- **Visible collision failure:** when plausible contact zones exist, one to three
+  local mesh intersections are visible around sleeves, elbows, shoulders, garments,
+  hands, held props, fur, or adjacent bodies. Perfectly clean collision fails; facial
+  occlusion, missing limbs, exposure, injury-like deformation, or universal clipping also fail.
 - **Crude gaze:** character eyes are stiff, slightly unequal or imperfectly aligned,
   and lack professional animation subtlety while remaining non-horrific.
 - **Texture poverty:** maps are visibly tiny, blurry, stretched, mirrored, tiled,
   and inconsistent in scale; surfaces are not clean PBR or clay.
+- **Material poverty:** diffuse/base color dominates. Normal/displacement, subsurface,
+  layered fabric/fur, clearcoat, and realistic reflection models are absent. Flat
+  matte areas, wrongly shiny patches, and inconsistent response replace coherent PBR.
 - **Asset poverty:** background and repeated objects visibly come from a very small
   reused library; detailed unique set dressing fails.
 - **Naive lighting:** illumination is blunt, uneven, and simple, with clipped local
@@ -26,15 +39,19 @@ not conventional visual polish.
 
 ## Scored checks
 
-Score each dimension 0–2. Accept at 14/18 or above only when all hard checks pass.
+Score each dimension 0–2. Accept at 20/26 or above only when all hard checks pass.
 
 | Dimension | 0 | 1 | 2 |
 |---|---|---|---|
 | Broad anchors | lost | partly retained | clearly retained |
 | Fidelity ceiling | too exact | mixed | detail clearly reduced |
-| Geometry | smooth/polished | mixed | awkward primitive |
+| Topology budget | dense/smooth | mixed | extremely sparse masses |
+| Proportions | source-faithful | mildly altered | visibly broken but readable |
+| Pose/rigging | natural | partly stiff | rigid and technically failed |
+| Collision | perfectly clean or destructive | subtle/inconsistent | local readable clipping |
 | Faces/gaze | refined | partly stiff | crudely convincing |
 | Textures | clean/unique | some roughness | tiny and repeated |
+| Materials | coherent/PBR | partly simplified | diffuse-only and mismatched |
 | Asset reuse | rich variety | some reuse | visibly limited library |
 | Background | detailed | reduced | sparse and repetitive |
 | Lighting | cinematic | simple | naively uneven |
@@ -44,9 +61,36 @@ Score each dimension 0–2. Accept at 14/18 or above only when all hard checks p
 
 ### Too faithful, attractive, or polished
 
-Retry with: “Lock only count, layout, pose, camera, scene category, silhouettes,
-and large color blocks. Discard fine likeness. Reduce topology, proportions,
-facial refinement, garment detail, unique assets, and material sophistication.”
+Retry with: “Lock only count/type, layout, semantic action, camera, scene category,
+major props, and large color blocks. Release exact pose, silhouette, anatomy, and
+clean collision. Discard fine likeness and reduce topology, garment detail, unique
+assets, and material sophistication.”
+
+### Polygon count is still too high
+
+Retry with: “Replace each head, torso, limb, paw, garment, and animal body with a
+handful of large primitive masses. Remove small facets and silhouette-smoothing edge
+loops. Do not reproduce a smooth source outline by tessellating it into many triangles.”
+
+### Proportions remain correct or flattering
+
+Retry with: “Keep subject type, identity anchors, and semantic action, but release
+the source silhouette. Deliberately mismatch head/body ratio, limb lengths, neck,
+torso width, joint size, muzzle, paws/hooves, and animal body mass. Make assembled
+parts awkward rather than elegantly caricatured.”
+
+### Pose still looks natural
+
+Retry with: “Preserve only what the action means. Lock the torso, rotate joints on
+one crude axis, raise shoulders too high, kink elbows, straighten wrists, plant feet,
+weaken balance and contact, and remove counter-pose, weight transfer, and soft deformation.”
+
+### Garments and bodies remain collision-free
+
+Retry with: “Add one to three local visible intersections at source-evidenced contact
+zones: sleeve into elbow, upper arm through shoulder or garment, hand into sleeve or
+held prop, garment into torso, fur into harness, or adjacent bodies slightly intersecting.
+Keep faces and complete limbs visible; do not imply injury or expose the body.”
 
 ### Eyes still look professionally animated
 
@@ -66,6 +110,13 @@ Retry with: “Replace surfaces with tiny blurry diffuse maps. Make tiling, seam
 UV stretch, mirrored details, inconsistent scale, and reuse clearly visible.
 Reuse the same map across multiple compatible objects.”
 
+### Materials still look premium
+
+Retry with: “Remove coherent PBR material response. Use diffuse/base color as the
+only reliable channel. Delete normal, displacement, subsurface, clearcoat, layered
+fabric/fur, and realistic reflections. Make broad areas dead-flat, allow a few wrongly
+shiny patches, and let nearby objects react inconsistently to the same light.”
+
 ### Lighting is too professional
 
 Retry with: “Change lighting only. Use one blunt overhead-front directional light
@@ -81,7 +132,7 @@ voids, dramatic fog, and threatening light.
 
 ### Broad composition drifts
 
-Restate subject count, approximate coordinates, relative scale, pose, camera height,
+Restate subject count/type, approximate coordinates, relative scale, semantic action, camera height,
 horizon, foreground occlusion, and background masses. Say “no reframing, recropping,
 camera move, subject merge, or rearrangement.”
 

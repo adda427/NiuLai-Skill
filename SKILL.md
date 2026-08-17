@@ -1,10 +1,11 @@
 ---
 name: niu-lai-translator
 description: >-
-  Reconstructs any supplied image as deliberately crude primitive low-poly 3D:
-  clumsy faces and gazes, very low-resolution repeated textures, reused sparse
-  background assets, and naive single-light rendering while preserving only the
-  source's broad composition anchors. Use when users invoke 牛来低模转译,
+  Reconstructs any supplied image as exaggeratedly failed primitive low-poly 3D:
+  extremely sparse meshes, distorted proportions, stiff broken-looking posing,
+  visible garment/body clipping, crude faces, repeated tiny textures, reused sparse
+  assets, and naive lighting while preserving only semantic and compositional anchors.
+  Use when users invoke 牛来低模转译,
   niu-lai-translator, 反向出圈画质, 低画质重制, 粗糙人物低模, 早期 3D 游戏截图,
   primitive folk CGI, bootleg CGI, or ask to make an image look intentionally
   cheap, awkward, poorly modeled, poorly lit, and less faithfully reproduced.
@@ -16,7 +17,8 @@ description: >-
 
 Rebuild the source as a scene made by a sincere but technically limited early-3D
 team. Keep the image readable and structurally related to the source while making
-modeling, eyes, textures, asset variety, lighting, and rendering visibly crude.
+topology, proportions, rigging, collision, eyes, textures, assets, lighting, and
+rendering visibly fail. A merely stylish or attractive low-poly result is a failure.
 
 ## Workflow
 
@@ -25,8 +27,8 @@ Track this sequence:
 ```text
 - [ ] 1. Confirm that an input image exists; request one if absent
 - [ ] 2. Read explicit parameters and infer the rest from the primitive defaults
-- [ ] 3. Extract broad anchors: subject count, layout, pose, camera, color blocks
-- [ ] 4. Set a deliberately low detail and fidelity budget
+- [ ] 3. Extract hard anchors: subject count/type, layout, semantic action, camera, color blocks
+- [ ] 4. Release exact anatomy, proportions, joint angles, silhouette, and collision fidelity
 - [ ] 5. Build one source-based image-edit prompt in the required order
 - [ ] 6. Generate/edit unless the user asked for prompts or options only
 - [ ] 7. Inspect against the inverted quality gate; retry polished results
@@ -49,13 +51,16 @@ Track this sequence:
 
 Identify without reporting every item unless asked:
 
-- **Subjects:** count, broad type, silhouette, large hairstyle, garment category,
-  dominant color blocks, large props, pose, gesture, and approximate gaze.
+- **Subjects:** count, broad type, large hairstyle, garment category, dominant color
+  blocks, large props, semantic action, rough facing direction, and social relation.
 - **Composition:** crop, camera height, perspective, horizon, relative scale,
   spacing, foreground/midground/background, and occlusion.
 - **Scene:** only the major terrain, architecture, or stage masses required for
   the image to remain recognizable.
 - **Palette:** three to six source colors worth retaining.
+- **Deliberately mutable structure:** limb length, head/body ratio, torso width,
+  animal proportions, exact joint angles, balance, silhouette accuracy, garment fit,
+  and clean separation between intersecting meshes.
 - **Discardable detail:** fine facial likeness, subtle expression, hair strands,
   embroidery, microtexture, unique background assets, small signage, and decoration.
 
@@ -71,9 +76,16 @@ anchor_lock: strict
 identity_lock: medium
 detail_budget: very_low
 geometry: primitive_low_poly
+polygon_budget: extremely_low
 face_geometry: clumsy_asymmetric
 gaze_quality: stiff_misaligned
+proportion_fidelity: deliberately_broken
+pose_lock: semantic_action_only
+pose_quality: stiff_failed_rig
+collision_quality: visible_clipping
+clipping_count: 1_to_3
 texture_resolution: very_low
+material_model: diffuse_only_mismatched
 texture_repetition: obvious
 asset_reuse: heavy
 background_detail: sparse
@@ -83,20 +95,32 @@ text_mode: none
 ratio: source_ratio
 ```
 
-These are intentional defaults. High facial fidelity, rich backgrounds, unique
-textures, attractive eyes, or professional lighting are failures unless requested.
+These are intentional defaults. Correct anatomy, natural poses, perfectly clean
+collision in contact-rich scenes, coherent PBR materials, high facial fidelity,
+rich backgrounds, unique textures, attractive eyes, or professional lighting are
+failures unless requested.
 
-## Preserve anchors, not polish
+## Preserve meaning, not anatomy
 
-- Strictly preserve subject count, broad left-to-right arrangement, major pose,
-  gesture, crop, camera, occlusion, scene category, and dominant color blocks.
-- Preserve large identity anchors such as species, hair mass, clothing category,
-  and major props. Do not preserve every facial detail by default.
-- Permit proportions, facial topology, gaze alignment, garment detail, and surface
-  accuracy to become visibly crude while the scene remains legible.
+- Strictly preserve subject count and type, broad left-to-right arrangement, crop,
+  camera, scene category, semantic action, major props, and dominant color blocks.
+- Preserve what the action means, not the exact source pose. A wave should remain a
+  wave and an embrace an embrace, but elbows, shoulders, wrists, knees, weight,
+  balance, and torso twist should become stiff, simplified, and slightly wrong.
+- Preserve identity anchors such as species, hair mass, clothing category, and
+  markings, but do not lock the source silhouette or body proportions.
+- Deliberately change human and animal proportions. Use mismatched limb lengths,
+  oversized or undersized heads, short rigid necks, broad or pinched torsos, chunky
+  joints, crude paws/hooves, or uneven body masses. Keep subjects recognizable and
+  non-horrific; do not change a real person's apparent age, ethnicity, or body category.
+- Introduce one to three readable collision failures when people, animals, clothing,
+  or props make contact: sleeves may sink into elbows, upper arms may cut through
+  shoulders or loose clothing, hands may intersect sleeves or held objects, and fur
+  or garments may penetrate nearby meshes. Do not hide faces, erase whole limbs,
+  imply injury, expose the body, or turn every contact into clipping.
 - Raise `identity_lock` to `high` only when the user requests likeness or the task
   is identity-sensitive; reduce reconstruction strength if necessary.
-- Do not change a real person's apparent age, ethnicity, body category, pose, or
+- Do not change a real person's apparent age, ethnicity, body category, or
   relationship to others merely to create the style.
 - Add no people, animals, horns, cow traits, weapons, props, logos, subtitles,
   interface, meme text, landmarks, or weather not evidenced by the source.
@@ -105,21 +129,32 @@ textures, attractive eyes, or professional lighting are failures unless requeste
 
 Apply all layers together:
 
-1. **Geometry:** use few, large, awkward planes; hard normals; lumpy silhouettes;
-   blocky joints; wedge hands; crude facial wedges; no elegant tessellation.
-2. **Faces and gaze:** reuse simple eye construction; allow unequal eye size,
+1. **Topology:** use an extremely low polygon budget with large planar sections.
+   A head, torso, or animal body must read as a handful of crude masses rather than
+   a smooth mesh covered in small facets. Avoid silhouette-smoothing support loops.
+2. **Proportions:** break source-faithful anatomy while keeping subject category and
+   action readable. Prefer visibly mismatched primitive parts over elegant caricature.
+3. **Pose and rigging:** reduce each joint to one crude rotation. Use locked torsos,
+   kinked elbows, elevated shoulders, straight wrists, planted feet, poor balance,
+   floating hands, and weak contact. Avoid natural counter-pose and weight transfer.
+4. **Collision:** show a small number of intentional mesh penetrations at shoulders,
+   upper arms, elbows, sleeves, garments, fur, hands, or held props when plausible.
+5. **Faces and gaze:** reuse simple eye construction; allow unequal eye size,
    slightly off-center pupils, imperfect gaze alignment, stiff lids, flat mouth
    slits, and frozen expressions. Keep intent readable, not professionally acted.
-3. **Materials:** use tiny blurry diffuse maps, seams, UV stretching, mirrored
-   details, inconsistent scale, and crude painted shadow information.
-4. **Repetition:** visibly tile textures and reuse a very small library of trees,
+6. **Materials:** use diffuse/base color as the dominant or only material channel.
+   Remove normal, displacement, subsurface, clearcoat, layered roughness, fabric,
+   skin, fur, and realistic reflection models. Use tiny blurry maps, seams, UV
+   stretching, mirrored details, crude painted shadows, flat matte areas, and a few
+   wrongly shiny patches. Materials on nearby objects may respond inconsistently.
+7. **Repetition:** visibly tile textures and reuse a very small library of trees,
    posts, rocks, buildings, props, hair cards, cloth maps, or eye assets.
-5. **Background:** remove incidental detail. Repeat a few primitive assets with
+8. **Background:** remove incidental detail. Repeat a few primitive assets with
    minimal variation; avoid rich set dressing or individually authored objects.
-6. **Lighting:** use one blunt directional/overhead-front light plus weak flat
+9. **Lighting:** use one blunt directional/overhead-front light plus weak flat
    ambient fill. Allow clipped highlights, muddy dark patches, hard low-resolution
    shadows, weak contact, and exposure mismatch between nearby subjects.
-7. **Rendering:** use weak antialiasing, limited texture filtering, simple shadow
+10. **Rendering:** use weak antialiasing, limited texture filtering, simple shadow
    maps, fine noise, mild color fringe, and modest screen-capture softness.
 
 Do not use darkness, horror grading, VHS damage, heavy JPEG corruption, or mosaic
@@ -131,13 +166,14 @@ Read [references/prompt-blueprint.md](references/prompt-blueprint.md) for the fu
 schema and reusable clauses. Construct prompts in this order:
 
 1. Declare source-based primitive 3D reconstruction.
-2. Lock broad anchors and explicitly release fine-detail fidelity.
-3. Set primitive preset, extreme strength, and very-low detail budget.
-4. Specify crude geometry, faces, eyes, hair, hands, and proportions.
-5. Require very-low-resolution maps, obvious tiling, and heavy asset reuse.
-6. Strip background detail to repeated scene primitives.
-7. Specify naive lighting, uneven exposure, and basic render limitations.
-8. State ratio, text behavior, and source-tailored prohibitions.
+2. Lock semantic/compositional anchors while releasing exact pose, silhouette, and anatomy.
+3. Set an extremely low polygon budget and deliberately broken proportions.
+4. Specify stiff failed rigging plus one to three plausible clipping locations.
+5. Specify crude faces, eyes, hair, hands, paws, and joints.
+6. Require very-low-resolution maps, obvious tiling, and heavy asset reuse.
+7. Strip background detail to repeated scene primitives.
+8. Specify naive lighting, uneven exposure, and basic render limitations.
+9. State ratio, text behavior, and source-tailored prohibitions.
 
 Prefer observable flaws over labels such as “ugly” or “bad quality”. Mention a
 named game, engine, or film only when the user asks; always translate the name into
@@ -149,6 +185,11 @@ Read [references/quality-and-recovery.md](references/quality-and-recovery.md) be
 judging output. Retry whenever the result is too faithful, attractive, detailed,
 varied, or professionally lit. In particular, reject results where:
 
+- geometry uses many small facets or preserves smooth source-faithful silhouettes;
+- human or animal proportions remain correct, flattering, or source-faithful;
+- poses retain natural balance, joint flow, weight transfer, or clean contact;
+- a contact-rich image offers plausible intersections but all garments, limbs, fur,
+  and held objects remain perfectly collision-free;
 - faces retain polished animation acting or appealing aligned eyes;
 - textures are clean, unique, high-resolution, or subtly varied;
 - background objects are numerous, detailed, and individually modeled;
